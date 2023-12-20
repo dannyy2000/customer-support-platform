@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE')
       table.string('first_name').notNullable()
       table.string('last_name').notNullable()
-      table.string('email').notNullable()
+      table.string('email').notNullable().unique()
       table.string('support_message_title').notNullable()
       table.text('support_message_text').notNullable()
       table.string('file').notNullable()

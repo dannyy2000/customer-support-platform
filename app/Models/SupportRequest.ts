@@ -1,5 +1,5 @@
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import User from '../Models/User'
+import User from './User'
 
 export default class SupportRequest extends BaseModel {
   @column({ isPrimary: true })
@@ -26,6 +26,6 @@ export default class SupportRequest extends BaseModel {
   @column()
   public file: string
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, { foreignKey: 'user_id' })
   public user: BelongsTo<typeof User>
 }

@@ -18,8 +18,13 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+// start/routes.ts
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+import Route from '@ioc:Adonis/Core/Route'
+import SupportRequestsController from 'App/Controllers/Http/SupportRequestsController'
+
+Route.post('/submit_request', 'SupportRequestsController.submitSupportRequest')
+
+// Route.get('/', async () => {
+//   return { hello: 'world' }
+// }

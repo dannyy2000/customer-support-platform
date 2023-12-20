@@ -1,5 +1,5 @@
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import SupportRequest from '../Models/SupportRequest'
+import SupportRequest from './SupportRequest'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -9,8 +9,8 @@ export default class User extends BaseModel {
   public email: String
 
   @column()
-  public fullname: String
+  public full_name: String
 
-  @hasMany(() => SupportRequest)
+  @hasMany(() => SupportRequest, { foreignKey: 'user_id' })
   public supportRequests: HasMany<typeof SupportRequest>
 }
