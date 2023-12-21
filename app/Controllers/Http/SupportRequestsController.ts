@@ -2,12 +2,13 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import SupportRequest from '../../Models/SupportRequest'
 import User from '../../Models/User'
 import CreateSupportRequestValidator from 'App/Validators/CreateSupportRequestValidator'
+import Application from '@ioc:Adonis/Core/Application'
 export default class SupportRequestsController {
   public async submitSupportRequest({ request, response }: HttpContextContract) {
     try {
-      const payload = request.validate()
+      const payload = await request.validate(CreateSupportRequestValidator)
       const { first_name, last_name, email, support_message_title, support_message_text, file } =
-        request.all()
+        payload
 
       let user = await User.firstOrCreate(
         { email: email },
@@ -20,7 +21,16 @@ export default class SupportRequestsController {
       supportRequest.email = email
       supportRequest.support_message_title = support_message_title
       supportRequest.support_message_text = support_message_text
-      supportRequest.file = file
+
+      if (!file?.isValid) {
+        return file?.errors
+      }
+
+      await file.move(Application.tmpPath('uploads'), {
+        overwrite: true,
+      })
+
+      supportRequest.file = file.fileName || ''
 
       await user.related('supportRequests').create(supportRequest.toJSON())
 

@@ -1,7 +1,7 @@
-import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class CreateSupportRequestValidator {
+export default class FileValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -23,17 +23,7 @@ export default class CreateSupportRequestValidator {
    *     ])
    *    ```
    */
-  public schema = schema.create({
-    first_name: schema.string(),
-    last_name: schema.string(),
-    email: schema.string({}, [rules.email()]),
-    support_message_title: schema.string(),
-    support_message_text: schema.string(),
-    file: schema.file({
-      size: '2mb',
-      extnames: ['jpg', 'png', 'gif'],
-    }),
-  })
+  public schema = schema.create({})
 
   /**
    * Custom messages for validation failures. You can make use of dot notation `(.)`
@@ -46,6 +36,5 @@ export default class CreateSupportRequestValidator {
    * }
    *
    */
-
   public messages: CustomMessages = {}
 }
