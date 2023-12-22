@@ -23,16 +23,27 @@ export default class SupportRequestsController {
       supportRequest.support_message_text = support_message_text
 
       if (!file?.isValid) {
-        return file?.errors
+        throw new Error('Invalid file. Please upload a valid file.')
       }
+      console.log(file)
 
-      await file.move(Application.tmpPath('uploads'), {
+      const destinationPath = Application.tmpPath('uploads')
+      console.log('Destination Path:', destinationPath)
+
+      console.log('i am after the destination logged out ')
+
+      await file.move(destinationPath, {
         overwrite: true,
       })
+
+      console.log('i got here after logging out destination path ')
 
       supportRequest.file = file.fileName || ''
 
       await user.related('supportRequests').create(supportRequest.toJSON())
+      console.log('i am the user created : ', user)
+      console.log('i am the support request: ', supportRequest)
+      console.log('I got here before creating ')
 
       response.status(201).json({ message: 'Support request submitted successfully' })
     } catch (error) {

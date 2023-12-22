@@ -30,7 +30,7 @@ export default class CreateSupportRequestValidator {
     support_message_title: schema.string(),
     support_message_text: schema.string(),
     file: schema.file({
-      size: '2mb',
+      size: '1mb',
       extnames: ['jpg', 'png', 'gif'],
     }),
   })
