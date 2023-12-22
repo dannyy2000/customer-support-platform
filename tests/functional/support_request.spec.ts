@@ -25,7 +25,7 @@ test.group('Support request', (group) => {
       .file('file', fakeAttachment.contents, { filename: fakeAttachment.name })
 
     response.assertStatus(201)
-    // assert.isTrue(await fakeDrive.exists(fakeAttachment.name))
+    assert.isTrue(await fakeDrive.exists(fakeAttachment.name))
     console.log(response.text())
   })
 })
